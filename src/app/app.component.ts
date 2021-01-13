@@ -4,8 +4,9 @@ import { User } from './auth-form/auth-form.interface';
 
 @Component({
   selector: 'app-root',
-  template: './app.component.html',
-   
+  templateUrl:'./app.component.html', 
+  styleUrls: ['./app.component.css']
+
   
 })
 export class AppComponent {
