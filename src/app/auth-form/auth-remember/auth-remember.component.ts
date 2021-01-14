@@ -1,9 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-auth-remember',
+  selector: 'auth-remember',
   templateUrl: './auth-remember.component.html',
-  styleUrls: ['./auth-remember.component.css']
+ 
 })
 export class AuthRememberComponent {
 
