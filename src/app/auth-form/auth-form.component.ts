@@ -1,6 +1,8 @@
-import { Component, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, ViewChildren, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { AuthRememberComponent } from './auth-remember/auth-remember.component';
+
+import { AuthMessageComponent} from './/auth-message.component';
 
 import { User } from './auth-form.interface';
 
@@ -19,23 +21,45 @@ import { User } from './auth-form.interface';
           <input type="password" name="password" ngModel>
         </label>
         <ng-content select="auth-remember"></ng-content>
-        <div *ngIf="showMessage">
-          You will be logged in for 30 days
-        </div>
+       <auth-message 
+        [style.display]="(showMessage ? 'inherit' : 'none')"> 
+        </auth-message>
+        <auth-message 
+        [style.display]="(showMessage ? 'inherit' : 'none')"> 
+        </auth-message>
+        <auth-message 
+        [style.display]="(showMessage ? 'inherit' : 'none')"> 
+        </auth-message>
         <ng-content select="button"></ng-content>
       </form>
     </div>
   `
 })
-export class AuthFormComponent implements AfterContentInit {
+export class AuthFormComponent implements AfterContentInit, AfterViewInit {
 
   showMessage: boolean;
+
+  @ViewChildren(AuthMessageComponent) message: QueryList<AuthMessageComponent>;
 
   @ContentChildren(AuthRememberComponent) remember: QueryList<AuthRememberComponent>;
 
   @Output() submitted: EventEmitter<User> = new EventEmitter<User>();
 
+  constructor( private cd: ChangeDetectorRef) {}
+  
+  ngAfterViewInit() {
+    if (this.message) {
+      
+      this.message.forEach((message) => {
+       message.days = 30 
+      });
+      this.cd.detectChanges();
+    }
+  }
+  
   ngAfterContentInit() {
+
+    
     if (this.remember) {
       this.remember.forEach((item) => {
         item.checked.subscribe((checked: boolean) => this.showMessage = checked);
