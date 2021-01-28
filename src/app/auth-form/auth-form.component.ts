@@ -8,6 +8,9 @@ import { User } from './auth-form.interface';
 
 @Component({
   selector: 'auth-form',
+  styles: [`
+  .email { border-color: #9f72e6}
+  `],
   template: `
     <div>
       <form (ngSubmit)="onSubmit(form.value)" #form="ngForm">
@@ -34,7 +37,7 @@ export class AuthFormComponent implements AfterContentInit, AfterViewInit {
 
   showMessage: boolean;
 
-  @ViewChild('#email') email: ElementRef;
+  @ViewChild('email') email: ElementRef;
 
   @ViewChildren(AuthMessageComponent) message: QueryList<AuthMessageComponent>;
 
@@ -45,7 +48,10 @@ export class AuthFormComponent implements AfterContentInit, AfterViewInit {
   constructor( private cd: ChangeDetectorRef) {}
   
   ngAfterViewInit() {
-    console.log(this.email)
+    this.email.nativeElement.setAttribute('placeholder', 'Enter your email address'); 
+    this.email.nativeElement.classList.add('email'); 
+    this.email.nativeElement.focus(); 
+
     if (this.message) {
       
       this.message.forEach((message) => {
