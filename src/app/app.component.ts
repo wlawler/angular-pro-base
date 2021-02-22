@@ -1,18 +1,14 @@
-import { AfterContentInit, Component, ViewChild, TemplateRef, ViewContainerRef} from '@angular/core';
-import {AuthFormComponent } from './auth-form/auth-form.component';
-import { User } from './auth-form/auth-form.interface';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl:'./app.component.html', 
-  styleUrls: ['./app.component.css']
-
-  
+  template: `
+    <div>
+      <example-one></example-one>
+      <example-two></example-two>
+      <example-three></example-three>
+    </div>
+  `
 })
-
 export class AppComponent {
- ctx = { 
-   $implicit: 'Wes Lawler', 
-   location: 'Louisville, KY'
- };
 }
