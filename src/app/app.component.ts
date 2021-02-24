@@ -23,7 +23,7 @@ export class AppComponent {
   changeUser() {
     this.user = {
       name: 'Tom Delonge',
-      age: 41,
+      age: 42,
       location: 'California'
     };
   }
