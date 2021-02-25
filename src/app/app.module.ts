@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MyForDirective} from './my-for/my-for.directive'
+
 import { AppComponent } from './app.component';
+
+import { FileSizePipe } from './filesize.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MyForDirective
-  
+    FileSizePipe
   ],
   imports: [
     BrowserModule
