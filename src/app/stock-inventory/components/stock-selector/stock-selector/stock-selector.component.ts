@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Product} from "../../../models/product.interface";
 
@@ -13,4 +13,9 @@ parent: FormGroup;
 @Input() 
 products: Product[];
 
+@Output()
+added = new EventEmitter<any>();
+onAdd(){ 
+   this.added.emit(this.parent.get('selector').value);
+}
 }
