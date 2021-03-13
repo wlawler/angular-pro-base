@@ -12,7 +12,8 @@
       
     </stock-selector>
     <stock-products
-    [parent]="form">
+    [parent]="form"
+    (removed)="removeStock($event)">
 
     </stock-products>
    
