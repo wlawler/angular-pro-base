@@ -10,26 +10,14 @@ import { Product} from "../../models/product.interface";
 })
 
 export class StockInventoryComponent {
-  products: Product[] = [
-    { "id": 1, "price": 2800, "name": "MacBook Pro"}, 
-    { "id": 2, "price": 2850, "name": "Usb"},
-    { "id": 3, "price": 3000, "name": "Rolex"},
-    { "id": 4, "price": 280, "name": "Floppy Disk"},
-    { "id": 5, "price": 4000, "name": "Zune"},
-    
-    
-
-  ]; 
+  products: Product[]; 
   form = this.fb.group({
     store: this.fb.group({
       branch: (''), 
       code:  ('')
     }), 
     selector: this.createStock({}), 
-    stock: this.fb.array([
-      this.createStock({ product_id: 1, quantity: 10}), 
-      this.createStock({ product_id: 3, quantity: 50}), 
-      ])
+    stock: this.fb.array([])
   })
 
   constructor( private fb: FormBuilder) {}

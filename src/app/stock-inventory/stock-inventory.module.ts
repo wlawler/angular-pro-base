@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {InMemoryDataService } from '../in-memory-data.service';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+
 
 import { StockInventoryComponent } from './containers/stock-inventory/stock-inventory.component';
 import { StockBranchComponent } from './components/stock-branch/stock-branch/stock-branch.component';
@@ -16,8 +20,14 @@ import { StockSelectorComponent } from './components/stock-selector/stock-select
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    HttpClientModule, 
+
+  HttpClientInMemoryWebApiModule.forRoot(
+    InMemoryDataService, { dataEncapsulation: false }
+  )
   ],
+
   exports: [
     StockInventoryComponent
   ]
