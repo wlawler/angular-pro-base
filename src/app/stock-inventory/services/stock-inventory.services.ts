@@ -1,7 +1,10 @@
-import { HttpClient, HttpErrorResponse} from '@angular/common/http'; 
+import { HttpClient} from '@angular/common/http'; 
+import {HttpErrorResponse,HttpResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError} from 'rxjs';
-import { map, catchError } from 'rxjs/operators'
+import { throwError} from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators'
+import { Product, Item } from '../models/product.interface'
+
 //import { catchError} from 'rxjs/operators';
 //import 'rxjs/add/operator/catch'
 //import 'rxjs/add/observable/throw'
@@ -13,18 +16,51 @@ import { map, catchError } from 'rxjs/operators'
 
 export class StockInventoryService {
     
-     private shopUrl = 'http://localhost:3000';
+     shopUrl = 'http://localhost:3000';
     
-    constructor( 
-        private http: HttpClient
-    ){  }
+    constructor( private http: HttpClient ){  }
 
+
+  
     getCartItems() { 
-        return this.http
-        .get('http://localhost:3000/cart')
+        return this.http.get<Item[]>(this.shopUrl+'/cart')
         .pipe(
-        map((response: Response) => response.json()),
-        //catchError((error: any) => throwError('error occured')));
-        catchError( (error: HttpErrorResponse) => { throwError(error) }))
+        retry(1),
+        catchError(this.handleError)); }
+
+    getCartItems_1(){ 
+      return this.http.get(this.shopUrl);
     }
-}
+   
+    getProducts() { 
+      return this.http.get<Product[]>(this.shopUrl+'/products')
+      .pipe(
+        retry(1), 
+        catchError(this.handleError)); }
+
+        getProducts_1(){
+          return this.http.get(this.shopUrl);
+        }
+      
+    
+
+    private handleError(error: HttpErrorResponse) {
+      if (error.error instanceof ErrorEvent) {
+         // A client-side or network error occurred. Handle it accordingly.
+         console.error('An error occured:', error.error.message); 
+      } else {
+        // The backend returned an unsuccessful response code. 
+        // The response body may contain clues as to what went wrong.
+        console.error( 
+          `Backend returned code ${error.status},` + 
+          `body was: ${error.error}`); 
+        }
+        return throwError( 
+          'Something bad happened; please try again later.');
+        
+
+        
+      }
+      }
+    
+  
