@@ -6,6 +6,7 @@ import { StockInventoryService} from '../../services/stock-inventory.services'
 
 import { FormBuilder, FormGroup,FormArray} from '@angular/forms';
 import { Product, Item} from "../../models/product.interface";
+import { nextTick } from 'process';
 
 @Component({
   selector: 'stock-inventory',
@@ -15,6 +16,8 @@ import { Product, Item} from "../../models/product.interface";
 
 export class StockInventoryComponent implements OnInit {
   products: Product[]; 
+
+  total: number;
 
   productMap: Map<number, Product>;
   form = this.fb.group({
@@ -31,14 +34,7 @@ export class StockInventoryComponent implements OnInit {
                ) {}
 
 
-               /*
-              ngOnInit() {
-                this.dataService.multipleStoreSources().subscribe(storeGetList = {
-                  this.cartData =  = 
-                })
-              }
-
-               */
+             
 
   ngOnInit(){ 
     let cart = this.stockService.getCartItems(); 
@@ -53,10 +49,20 @@ export class StockInventoryComponent implements OnInit {
        this.productMap = new Map<number, Product>(myMap); 
        this.products = products; 
        cart.forEach(item => this.addStock(item));
+       this.calculateTotal(this.form.get('stock').value);
+       this.form.get('stock') 
+        .valueChanges.subscribe(value => this.calculateTotal(value));
+        })
 
 
+     };
+  
 
-     });
+  calculateTotal(value: Item[]) {
+    const total = value .reduce(( prev, next) => {
+      return prev + (next.quantity * this.productMap.get(next.product_id).price);
+    }, 0);
+    this.total = total; 
   }
 
   createStock(stock) {
