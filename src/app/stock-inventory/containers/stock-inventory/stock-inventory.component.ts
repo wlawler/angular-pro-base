@@ -4,7 +4,7 @@ import { Observable} from 'rxjs';
 import { forkJoin}  from 'rxjs';
 import { StockInventoryService} from '../../services/stock-inventory.services'
 
-import { FormBuilder, FormGroup,FormArray} from '@angular/forms';
+import { FormBuilder, FormGroup,FormArray, Validators} from '@angular/forms';
 import { Product, Item} from "../../models/product.interface";
 import { nextTick } from 'process';
 
@@ -22,8 +22,8 @@ export class StockInventoryComponent implements OnInit {
   productMap: Map<number, Product>;
   form = this.fb.group({
     store: this.fb.group({
-      branch: (''), 
-      code:  ('')
+      branch: [(''), Validators.required], 
+      code:  [(''), Validators.required]
     }), 
     selector: this.createStock({}), 
     stock: this.fb.array([])
