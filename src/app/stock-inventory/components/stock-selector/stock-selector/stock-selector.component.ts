@@ -20,7 +20,7 @@ onAdd(){
    this.parent.get('selector').reset({
      product_id: '', 
      quantity: 10
-   })
+   });
 }
 
 }

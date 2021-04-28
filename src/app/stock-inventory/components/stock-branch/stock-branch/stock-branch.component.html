@@ -6,9 +6,13 @@
         formControlName="branch">
         <div 
         class="error"
-        *ngIf="required('branch')"
-       >
+        *ngIf="required('branch')">
          Branch ID is Required
+        </div>
+        <div 
+        class="error"
+        *ngIf="invalid">
+         Invalid branch code: 1 letter, 3 numbers 
         </div>
       <input 
         type="text" 
@@ -16,10 +20,8 @@
         formControlName="code">
         <div 
         class="error"
-        *ngIf="required('code')"
-        >
+        *ngIf="required('code')">
           Manager ID is required 
           </div>
-
-    </div>
+      </div>
   </div>
