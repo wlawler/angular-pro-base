@@ -15,6 +15,18 @@ products: Product[];
 
 @Output()
 added = new EventEmitter<any>();
+
+get notSelected() {
+  return (
+    !this.parent.get('selector.product_id').value
+  );
+}
+get stockExists() {
+  return(
+    this.parent.hasError('stockExists') && 
+    this.parent.get('selector.product_id').dirty 
+  );
+}
 onAdd(){ 
    this.added.emit(this.parent.get('selector').value);
    this.parent.get('selector').reset({
