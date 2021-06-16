@@ -1,13 +1,13 @@
-import { HttpClient} from '@angular/common/http'; 
+import { HttpClient, HttpParams} from '@angular/common/http'; 
 import {HttpErrorResponse,HttpResponse} from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
-import { throwError} from 'rxjs';
+
+import { Observable, of, throwError} from 'rxjs';
 import { map, catchError, retry } from 'rxjs/operators'
 import { Product, Item } from '../models/product.interface'
 
-//import { catchError} from 'rxjs/operators';
-//import 'rxjs/add/operator/catch'
-//import 'rxjs/add/observable/throw'
+
 
 
 
@@ -40,10 +40,57 @@ export class StockInventoryService {
 
         getProducts_1(){
           return this.http.get(this.shopUrl);
-        }
-      
-    
+        } 
 
+        
+    checkBranch(id:string): Observable<boolean> {
+      return this.http.get(this.shopUrl+'/branches')
+      .pipe(
+        map(( branchIdList: Array<any>) =>
+        branchIdList.filter(branchId => branchId.id === id)), 
+        map(id => !id.length), 
+        catchError(this.handleError)
+
+      );
+     
+    }
+/*
+       checkBranchId2(id: string) {
+        return this.http
+        .get<boolean>((this.shopUrl + '/branches'));
+      
+
+      }
+      */
+/*
+
+    
+    checkBranchId (id: string): Observable<boolean> {
+      const invalidBranch = (this.shopUrl + '/branches')
+    }
+    
+    AsyncValidatorFn {
+       return (control: AbstractControl): Observable<ValidationErrors> => {
+         return zipcodeService.(this.shopUrl + '/branches')(control.value).pipe(
+           map((result:boolean) => result ? null : {inValidBranch: true})
+         ); 
+       }; 
+      }
+
+    
+        checkBranchId(id: string): Observable<boolean>{
+          let params = new HttpParams()
+               params.set('id', id);
+          return this.http
+          .get<boolean>( this.shopUrl + '/branches', {params}) 
+          .pipe(
+             map((response: HttpResponse) => response.json()),
+             map((response: any[]) => !!response.length)
+           catchError(this.handleError) )
+          
+        }
+     
+*/
     private handleError(error: HttpErrorResponse) {
       if (error.error instanceof ErrorEvent) {
          // A client-side or network error occurred. Handle it accordingly.

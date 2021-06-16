@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable} from 'rxjs';
 import { forkJoin}  from 'rxjs';
 import { StockInventoryService} from '../../services/stock-inventory.services'
-import{ StockValidators} from './stock-inventory.validators'
-import { FormBuilder, FormGroup,FormArray, Validators} from '@angular/forms';
+import{ StockValidators,/* checkBranchIdValidator*/} from './stock-inventory.validators'
+import { FormBuilder, FormGroup,FormArray, Validators, AbstractControl} from '@angular/forms';
 import { Product, Item} from "../../models/product.interface";
-import { nextTick } from 'process';
+import { map } from 'rxjs/internal/operators/map';
+
 
 @Component({
   selector: 'stock-inventory',
@@ -22,7 +23,8 @@ export class StockInventoryComponent implements OnInit {
   productMap: Map<number, Product>;
   form = this.fb.group({
     store: this.fb.group({
-      branch: [(''), [Validators.required, StockValidators.checkBranch]], 
+      branch: [(''), [Validators.required, StockValidators.checkBranch],
+      [ this.validateBranch.bind(this)]],  
       code:  [(''), Validators.required]
     }), 
     selector: this.createStock({}), 
@@ -30,7 +32,8 @@ export class StockInventoryComponent implements OnInit {
   }, {validator: StockValidators.checkStockExists});
 
   constructor( private fb: FormBuilder,
-               private stockService: StockInventoryService
+               private stockService: StockInventoryService, 
+          //     private validateBranch: checkBranchIdValidator
                ) {}
 
 
@@ -57,7 +60,13 @@ export class StockInventoryComponent implements OnInit {
 
      };
   
-
+ 
+  validateBranch(control: AbstractControl) {
+    return this.stockService.checkBranch(control.value)
+    .pipe(
+      map((branchIdList: boolean) => branchIdList ? null : {unknownBranch: true})
+    )
+  }
   calculateTotal(value: Item[]) {
     const total = value .reduce(( prev, next) => {
       return prev + (next.quantity * this.productMap.get(next.product_id).price);

@@ -1,4 +1,8 @@
-import { AbstractControl } from "@angular/forms";
+import { Injectable } from "@angular/core";
+import { AbstractControl, AsyncValidator, ValidationErrors } from "@angular/forms";
+import { Observable, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { StockInventoryService } from "../../services/stock-inventory.services";
 
 export class StockValidators {
     static checkBranch(control: AbstractControl) {
@@ -19,3 +23,18 @@ export class StockValidators {
         return exists ? { stockExists: true} : null; 
     }
 }
+
+/*
+export class checkBranchIdValidator  implements AsyncValidator {
+    constructor(private stockInventoryService: StockInventoryService) {}
+
+    validate(ctrl: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> 
+    {
+        return this.stockInventoryService.checkBranchId(ctrl.value) .pipe(
+            map( branchExist => (branchExist ? null: { existingBranch: true })), 
+            catchError(() => of(null))
+            );
+        
+    }
+    
+} */
