@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MailModule } from './mail/mail.module';
 
 import { AppComponent } from './app.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export const ROUTES: Routes = [
   { path: '**', redirectTo: 'folder/inbox' }
@@ -18,9 +18,9 @@ export const ROUTES: Routes = [
   ],
   imports: [
     BrowserModule,
-    HttpClient,
+    HttpClientModule,
     MailModule,
-    RouterModule.forRoot(ROUTES, { enableTracing: true })
+    RouterModule.forRoot(ROUTES)
   ],
   bootstrap: [
     AppComponent
