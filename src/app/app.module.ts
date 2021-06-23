@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
 
-import { StockInventoryModule } from './stock-inventory/stock-inventory.module';
-//import {InMemoryDataService} from './in-memory-data.service';
+
+import { MailModule } from './mail/mail.module';
 
 import { AppComponent } from './app.component';
+import { HttpClient } from '@angular/common/http';
+
+export const ROUTES: Routes = [
+  { path: '**', redirectTo: 'folder/inbox' }
+];
 
 @NgModule({
   declarations: [
@@ -12,7 +18,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    StockInventoryModule
+    HttpClient,
+    MailModule,
+    RouterModule.forRoot(ROUTES, { enableTracing: true })
   ],
   bootstrap: [
     AppComponent
