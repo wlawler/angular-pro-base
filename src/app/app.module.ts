@@ -1,29 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-
-
-import { MailModule } from './mail/mail.module';
+import { PizzaViewerComponent } from './containers/pizza-viewer.component';
+import { DrinkViewerComponent } from './containers/drink-viewer.component';
+import { SideViewerComponent } from './containers/side-viewer.component';
 
 import { AppComponent } from './app.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
-export const ROUTES: Routes = [
-  { path: '**', redirectTo: 'folder/inbox' }
-];
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PizzaViewerComponent,
+    DrinkViewerComponent,
+    SideViewerComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    MailModule,
-    RouterModule.forRoot(ROUTES)
+    HttpClientModule
   ],
   bootstrap: [
     AppComponent
+  ],
+  providers: [
+    { provide: 'api', useValue: '  http://localhost:3000/pizzas' }
   ]
 })
 export class AppModule {}
