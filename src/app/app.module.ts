@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { PizzaViewerComponent } from './containers/pizza-viewer.component';
 import { DrinkViewerComponent } from './containers/drink-viewer.component';
 import { SideViewerComponent } from './containers/side-viewer.component';
+import { API_Token } from './token';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent
   ],
   providers: [
-    { provide: 'api', useValue: '  http://localhost:3000/pizzas' }
+    { provide: API_Token, useValue: '  http://localhost:3000/pizzas' }
   ]
 })
 export class AppModule {}
