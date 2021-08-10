@@ -4,16 +4,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { FoodService } from '../food.service';
+import { HttpClient } from '@angular/common/http';
 
 interface Side {
   name: string,
   price: number
 }
+export function SideFactory(httpClient) { 
+  return new FoodService( httpClient, 'http://localhost:3000/sides');  
+  }
 
 @Component({
   selector: 'side-viewer',
   providers: [
-    FoodService
+    {provide: FoodService,
+      useFactory:SideFactory, 
+       deps: [
+          HttpClient 
+       ] } 
   ],
   template: `
     <div>

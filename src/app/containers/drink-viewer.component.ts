@@ -4,17 +4,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { FoodService } from '../food.service';
+import { HttpClient } from '@angular/common/http';
 
 interface Drink {
   name: string,
   price: number
 }
 
+export function DrinkFactory(httpClient) { 
+  return new FoodService( httpClient, 'http://localhost:3000/drinks');  
+  }
 @Component({
   selector: 'drink-viewer',
   providers: [
     
-    {provide: FoodService, useClass: FoodService}
+    {provide: FoodService,
+     useFactory: DrinkFactory, 
+     deps: [
+      HttpClient 
+    ]}
   ],
   template: `
     <div>

@@ -10,9 +10,9 @@ export class FoodService {
 	
   constructor(
     private http: HttpClient,
-    @Inject(API_Token) private api: string
+    private api: string 
   ) {
-    console.log('Ultimate Wes');
+    console.log(this.api);
   }
   getFood() { return this.http.get<any>(this.api)
       
