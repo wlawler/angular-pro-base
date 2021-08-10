@@ -13,7 +13,8 @@ interface Drink {
 @Component({
   selector: 'drink-viewer',
   providers: [
-    FoodService
+    
+    {provide: FoodService, useClass: FoodService}
   ],
   template: `
     <div>

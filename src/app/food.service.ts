@@ -11,7 +11,9 @@ export class FoodService {
   constructor(
     private http: HttpClient,
     @Inject(API_Token) private api: string
-  ) {}
+  ) {
+    console.log('Ultimate Wes');
+  }
   getFood() { return this.http.get<any>(this.api)
       
   }
