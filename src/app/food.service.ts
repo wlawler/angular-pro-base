@@ -10,11 +10,9 @@ export class FoodService {
 	
   constructor(
     private http: HttpClient,
-    private api: string 
-  ) {
-    console.log(this.api);
+
+  ) {}
+  getPizzas() { return this.http.get<any>(' http://localhost:3000/pizzas')}
+  getSides() { return this.http.get<any>( 'http://localhost:3000/sides')}
+  getDrinks() { return this.http.get<any>( 'http://localhost:3000/drinks')}    
   }
-  getFood() { return this.http.get<any>(this.api)
-      
-  }
-}

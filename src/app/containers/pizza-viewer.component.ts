@@ -10,17 +10,12 @@ interface Pizza {
   name: string,
   price: number
 }
-export function PizzaFactory(httpClient) { 
-  return new FoodService( httpClient, 'http://localhost:3000/Pizzas');  
-  }
+
 @Component({
   selector: 'pizza-viewer',
   providers: [
-    {provide: FoodService,
-      useFactory: PizzaFactory ,
-       deps: [
-          HttpClient 
-       ] } 
+     FoodService,
+      
   ],
   template: `
     <div>
@@ -34,6 +29,6 @@ export class PizzaViewerComponent implements OnInit {
   items$: Observable<Pizza[]>;
   constructor(private foodService: FoodService) {}
   ngOnInit() {
-    this.items$ = this.foodService.getFood();
+    this.items$ = this.foodService.getPizzas();
   }
 }
