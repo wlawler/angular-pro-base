@@ -1,5 +1,5 @@
 <div>
-  <pizza-viewer></pizza-viewer>
-  <side-viewer></side-viewer>
-  <drink-viewer></drink-viewer>
+  <div *ngFor="let todo of todos$ | async">
+    {{ todo.name }}
+  </div>
 </div>
